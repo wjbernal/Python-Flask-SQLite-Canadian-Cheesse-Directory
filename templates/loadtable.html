@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Load data table
+{% endblock %}
+
+{% block main %}
+    <div class="jumbotron">
+        <h1>Load Canadian Cheese Directory from CSV file</h1>
+    </div>
+    <form action="/loadtable" method="POST" class="form" enctype='multipart/form-data'>
+        <div class="form-group">
+            <input type="file" name="fileupload" id="fileToUpload" class="form-control text-uppercase text-center">
+        </div>
+        <button class="btn btn-primary" type="submit" value="Submit">Upload Data</button>
+    </form>
+
+{% endblock %}

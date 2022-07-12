@@ -1,0 +1,203 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Canadian Cheese Directory
+{% endblock %}
+
+{% block main %}
+
+<div class="section">
+    <h3>List of Cheeses produced in Canada</h3>
+    <hr />
+    <div class="row d-flex flex-row justify-content-center">
+        <div class="col-sm-3 col-md-3 col-lg-1">
+            <h5>Total Rows:</h5>
+        </div>
+        <div>
+            <h5><span class="text-danger" id="totalQueryNumOfRows">{{totalQueryNumOfRows}}</span></h5>
+        </div>
+        <div class="col-sm-5 col-md-5 col-lg-2">
+            <h5>Showing Rows from:</h5>
+        </div>
+        <div >
+            <h5><span class="text-danger"  id="currentRow">{{currentRow}}</span></h5>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-1">
+            <h5>To:</h5>
+        </div>
+        <div>
+            <h5><span class="text-danger" id="rowsTo">{{rowsTo}}</span></h5>
+        </div>
+    </div>
+    <div class="row d-flex flex-row justify-content-center">
+        <div class="col-3">
+            <h5><a id ="nextPage" class="nav-link" href="/search/{{previousRow}}">Previous Page</a></h5>
+        </div>
+        &emsp; &emsp; &emsp; &emsp;
+        <div class="col-3">
+            <h5><a id ="nextPage" class="nav-link" href="/search/{{nextRow}}">next Page</a></h5>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <table id="cheeseTable" class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th class="th-sm">Row #</th>
+                <th class="th-sm">Province</th>
+                <th class="th-sm">Cheese Name</th>
+                <th class="th-sm">Manufacturer</th>
+                <th class="th-sm">Milk Type</th>
+                <th class="th-sm">Fat Content %</th>
+                <th class="th-sm">See More</th>
+                <th class="th-sm d-none">hide</th>
+                <th class="th-sm d-none">hide</th>
+                <th class="th-sm d-none">hide</th>
+                <th class="th-sm d-none">hide</th>
+                <th class="th-sm d-none">hide</th>
+                <th class="th-sm d-none">hide</th>
+                <th class="th-sm d-none">hide</th>
+                <th class="th-sm d-none">hide</th>
+                <th class="th-sm d-none">hide</th>
+                <th class="th-sm d-none">hide</th>
+                <th class="th-sm d-none">hide</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- TODO: Loop through the database entries to display them in this table -->
+            {% for rw in rowsOfCheese%}
+                <tr>
+                    <td class="text-center"><input type="text" class = "td-input-transparent text-right" id="rowNum" name="rownum" value="{{rw.row_num}}" readonly></td>
+                    <td class="text-center"><input type="text" class = "td-input-transparent text-right" id="province" name="province" value="{{rw.province}}" readonly></td>
+                    <td class="text-left">  <input type="text" class = "td-input-transparent text-left" id="cheeseName" name="cheesename" value="{{rw.CheeseName}}" readonly></td>
+                    <td class="text-left w-100">  <input type="text" class = "td-input-transparent text-left w-100" id="manufacturer" name="manufacturer" value="{{rw.Manufacturer}}" readonly></td>
+                    <td class="text-left">  <input type="text" class = "td-input-transparent text-left" id="milkytype" name="milkytype" value="{{rw.MilkType}}" readonly></td>
+                    <td class="text-right"> <input type="text" class = "td-input-transparent text-right" id="fatpercent" name="fatpercent" value="{{rw.FatContentPercent}}%" readonly>
+                    </td>
+
+                    <!-- hide columns -->
+                    <td class="d-none"><input type="text" class = "td-input-transparent text-right d-none" id="milktreatment" name="milktreatment"value="{{rw.MilkTreatment}}" readonly></td>
+                    <td class="d-none"><input type="text" class = "td-input-transparent text-right d-none" id="moisture" name="moisture" value="{{rw.MoisturePercent}}%" readonly></td>
+                    <td class="d-none"><input type="text" class = "td-input-transparent text-right d-none"  id="manufacturingtype" name="Manufacturingtyp" value="{{rw.ManufacturingType}}" readonly>/td>
+                    <td class="d-none"><input type="text" class = "td-input-transparent text-right d-none"  id="ripening" name="ripening" value="{{rw.Ripening}}" readonly></td>
+                    <td class="d-none"><input type="text" class = "td-input-transparent text-right d-none"  id="rindtype" name="rindtype" value="{{rw.RindType}}" readonly></td>
+                    <td class="d-none"><input type="text" class = "td-input-transparent text-right d-none"  id="organic" name="organic" value="{{rw.Organic}}" readonly></td>
+                    <td class="d-none"><input type="text" class = "td-input-transparent text-right d-none" id="website" name="website" value="{{rw.WebSite}}" readonly></td>
+                    <td class="d-none"><input type="text" class = "td-input-transparent text-right d-none" id="particularities" name="particularities" value="{{rw.Particularities}}" readonly></td>
+                    <td class="d-none"><input type="text" class = "td-input-transparent text-right d-none" id="flavour" name="flavour" value="{{rw.Flavour}}" readonly></td>
+                    <td class="d-none"><input type="text" class = "td-input-transparent text-right d-none" id="characteristics" name="characteristics" value="{{rw.Characteristics}}" readonly></td>
+                    <td class="d-none"><input type="text" class = "td-input-transparent text-right d-none" id="categoryType" name="categoryType" value="{{rw.CategoryType}}" readonly></td>
+
+
+                    <td><!-- Button trigger modal -->
+                        <button type="button" id="more_cheese" class="more-cheese-info btn btn-info" data-toggle="modal" data-target="#cheese-detail">
+                          more
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="th-sm">Row #</th>
+                <th class="th-sm">Province</th>
+                <th class="th-sm">Cheese Name</th>
+                <th class="th-sm">Manufacturer</th>
+                <th class="th-sm">Milk Type</th>
+                <th class="th-sm">Fat Content %</th>
+                <th class="th-sm">See More</th>
+            </tr>
+          </tfoot>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-xl" id="cheese-detail"
+        tabindex="-1" role="dialog" aria-labelledby="cheese-detail-Title" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+
+        <h5 class="modal-title text-center m-auto" id="cheese-id">
+            Row #: <span class="text-danger" id="mod-rowNum"></span>
+            &emsp; &emsp;
+            Cheese Name: <span class="text-danger" id="mod-cheeseName"></span>
+            &emsp; &emsp;
+            Province: <span class="text-danger" id="mod-province"></span>
+        </h5>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-left">Milky Type</th>
+                    <th class="text-left">Milky Treatment</th>
+                    <th class="text-right">Fat %</th>
+                    <th class="text-right">Moisture</th>
+                    <th class="text-left">Process</th>
+                    <th class="text-left">Ripening</th>
+                    <th class="text-left">Rind Type</th>
+                    <th class="text-left">Organic</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-left"><span  class="text-dark" id="mod-milkytype"></span></span></td>
+                    <td class="text-left"><span  class="text-dark" id="mod-milkytreat"></span></span></td>
+                    <td class="text-right"><span class="text-dark" id="mod-fatpercent"></span></td>
+                    <td class="text-right"><span class="text-dark" id="mod-moisture"></td>
+                    <td class="text-left"><span  class="text-dark" id="mod-mantype"></span></td>
+                    <td class="text-left"><span  class="text-dark" id="mod-ripening"></td>
+                    <td class="text-left"><span  class="text-dark" id="mod-rindtype"></td>
+                    <td class="text-left"><span  class="text-dark" id="mod-organic"></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <div class="text-left ml-5">
+            <label class="font-weight-bold" for="mod-CategoryType">CategoryType</label>
+            <p class="text-muted" id="mod-categoryType" name="mod-categoryType"></p>
+        </div>
+        <hr />
+        <div class="text-left ml-5">
+            <label class="font-weight-bold" for="mod-Flavour">Flavour</label>
+            <p class="text-muted" id="mod-flavour" name="mod-flavour" ></p>
+        </div>
+        <hr />
+        <div class="text-left ml-5">
+            <label class="font-weight-bold" for="mod-Particularities">Particularities</label>
+            <p class="text-muted" id="mod-particularities" name="mod-particularities" ></p>
+        </div>
+        <hr />
+        <div class="text-left ml-5">
+            <label class="font-weight-bold" for="mod-Characteristics">Characteristics</label>
+            <p class="text-muted" id="mod-characteristics" name="mod-characteristics" ></p>
+        </div>
+        <hr />
+
+        <div class="text-left ml-5 pb-2">
+            <label class="font-weight-bold">Manufacturer</label>
+            <b><span class="text-primary text-left ml-3" id="mod-manufacturer"></span></b>
+        </div>
+        <div class="text-center p-3 border-top border-bottom bg-dark text-light">
+            <label class="font-weight-bold" for="websitelink">Website</label>
+            <a id="websitelink" name="websitelink" href="#" target="_blank"><span class="text-warning text-left" id="mod-website"></span></a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../static/cheese_script.js" ></script>
+
+{% endblock %}
